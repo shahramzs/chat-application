@@ -4,6 +4,7 @@ import {useLocation} from 'react-router-dom'
 import InfoBar from './InfoBar'
 import Input from './Input'
 import Messages from './Messages.'
+import TextContainer from './TextContainer';
 
 let socket;
 let ENDPOINT = 'ws://localhost:5000';
@@ -15,6 +16,7 @@ const Chat = () => {
     const [room, setRoom] = useState('');
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
+    const [users, setUsers] = useState('');
     
     
     useEffect(()=> {
@@ -41,6 +43,11 @@ const Chat = () => {
         socket.on("message",(arg)=>{
             setMessages([...messages, arg])
         })
+
+        socket.on("roomData", ({ users }) => {
+            setUsers(users);
+          });
+          
     },[messages])
 
 
@@ -60,6 +67,7 @@ const Chat = () => {
             <Messages messages={messages} name={name}/>
             <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
         </div>
+        <TextContainer users={users}/>
        </div>
     )
 }
