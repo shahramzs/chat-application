@@ -1,7 +1,17 @@
+import React from 'react'
+import ScrollToBottom from 'react-scroll-to-bottom'
+import Message from './Message'
 
-const Messages = () => {
+
+const Messages = ({messages,name}) => {
     return (
-        <div></div>
+        <ScrollToBottom>
+            {messages.map((message,i)=>(
+                <div key={i}>
+                    <Message message={message} name={name}/>
+                </div>
+            ))}
+        </ScrollToBottom>
     )
 }
 
